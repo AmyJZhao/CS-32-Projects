@@ -1,0 +1,482 @@
+My doubly linked list starts with a head pointer. The last pointer can be identified with its next pointer pointing to nullptr. There is no tail pointer, thus the list is not circular. My linked list does not use a dummy node. My list nodes contain a key, a value, a previous pointer, and a next pointer. My nodes are in the order they're inserted.
+
+Pseudocode:
+
+Map::Map(const Map &copy)
+{
+    set head to null pointer
+    create a pointer called p that holds copy's head pointer
+    iterate along copy's linked list and use insert() method to add nodes
+    while(pointer is not a nullptr)
+    {
+        insert a node with p's key and value as parameters
+        iterate to the next node in copy
+    }
+}
+
+Map::~Map()
+{
+    start with head pointer
+    while(pointer is not a null pointer)
+    {
+        set new node pointer to current node
+        set current node's pointer to next node
+        delete current node by deleting the new node pointer
+    }
+}
+    
+
+Map& Map::operator=(const Map& src)
+{
+    if(current map is not equal to src)
+    {
+        if(src is empty)
+            set head to null pointer
+        else
+        {
+            create an identical copy of src
+            swap temporary map and this map
+            this map is now identical to src
+        }
+        
+    }
+    return a pointer to this map
+}
+
+bool Map::insert(const KeyType& key, const ValueType& value)
+{
+    if(map already contains key)
+        return false
+    Create a new node and initialize it with key and value
+    Case 1: list is empty, and we're inserting the first node
+    if(head equals null pointer, so the list is empty)
+    {
+	set head to the new node
+        set head (new node!) pointer's previous and next pointer to null pointer
+      	
+    }
+    Case 2: if there are items in the list, insert key into the rear of the Map
+    else
+    {
+        create a new pointer and set it to head in order to navigate to the last node
+        while(pointer's next pointer is not null pointer)
+        {
+            iterate pointer to the next pointer
+        }
+        insert key by updating last node's next pointer
+	last node's next pointer is set to new node
+        new node's previous pointer is set to the 'last' pointer
+        new node's next pointer is set to null pointer  
+    }
+    return true
+}
+
+bool Map::update(const KeyType& key, const ValueType& value)
+{
+    set a new pointer equal to head to navigate through the linked list
+    while(pointer does not equal null pointer)
+    {
+        if(pointer's key equals key parameter) 
+	//basically if the key is present in the linked list
+        {
+            update value and return true
+        }
+        iterate to next pointer
+    }
+    if key has not been found, return false
+}
+
+bool Map::insertOrUpdate(const KeyType& key, const ValueType& value)
+{
+    call update() method first
+    if(update() method returns true)
+	return true
+    if update() method returns false, key is not in the map
+    try insert() method
+    if(insert() method returns true)
+    {
+        return true
+    }
+    if neither works (which should never happen), return false
+}
+
+bool Map::erase(const KeyType& key)
+{
+    //three cases
+    //erase the head
+    //erase a Node in the middle
+    //erase the last pointer (the tail)
+    if(map does not contain the key)
+        return false
+    //if the list is empty, return false
+    if(head equals null pointer)
+        return false;
+    //create temporary pointer that points to head
+    Node *kill = head;
+    //Case 1: erase the head
+    if(head pointer's key equals key parameter)
+    {
+        make the head pointer point to the second node
+        set the second node's previous pointer to nullptr
+        delete temporary pointer, thus deleting the head
+        return true
+    }
+    //Case 2 & 3: erase node that is either in the middle or end
+    while(temporary pointer is not null pointer)
+    {
+        if(temporary pointer's key matches key parameter)
+        {
+            if(if the node to be erased is not the tail pointer)
+            {
+                set previous node's next pointer to the temporary node's next pointer
+                set the next node's previous pointer to the temporary node's previous pointer
+                delete temporary pointer
+                return true
+            }
+            else //erase the last pointer
+            {
+                set the previous node's next pointer to nullptr in order to make the previous node be the last pointer
+                delete temporary pointer
+                return true
+            }
+        }
+        iterate temporary pointer to next node
+    }
+    return false
+}
+
+bool Map::contains(const KeyType& key) const
+{
+    create temporary pointer that points to head
+    while(pointer is not equal to null pointer)
+    {
+        if(pointer's key matches key parameter)
+            return true
+        iterate to next node
+    }
+    if while loop goes all the way through the list, return false
+}
+
+bool Map::get(const KeyType& key, ValueType& value) const
+{
+    create temporary pointer that points to head
+    while(pointer is not equal to null pointer)
+    {
+        if(pointer's key matches key parameter)
+	{
+	    set value parameter to pointer's value
+            return true
+	}
+        iterate to next node
+    }
+    if while loop goes all the way through the list, return false
+}
+
+bool Map::get(int i, KeyType& key, ValueType& value) const
+{
+    if(i is less than 0 or greater than the map's size)
+        return false
+    create temporary pointer that points to head
+    int j = 0; //create integer variable to store counter
+    while(pointer is not equal to null pointer && j <= i)
+    {
+        if(j == i)
+        {
+            set key parameter to pointer's key
+	    set value parameter to pointer's value
+            return true;
+        }
+        iterate to next node
+        update counter
+    }
+    return false;
+}
+
+void Map::swap(Map& other)
+{
+    //swap head pointers
+    Node *temp = head;
+    head = other.head;
+    other.head = temp;
+}
+
+bool combine(const Map& m1, const Map& m2, Map& result)
+{
+    Map end; //temporary map intended to be identical to result
+    int size1 = m1.size();
+    int size2 = m2.size();
+    bool f_y = true; //boolean variable 
+    boolean variable returns true if there are no identical keys with different values
+    //iterate through m1
+    for(int i = 0; i < size1; i++)
+    {
+        ValueType v;
+        KeyType k;
+        get key and value of each node
+        //if m2 does not contain key, it's safe to insert it into the combined map
+        if(m2 does not contain key)
+            insert key and value into the combined map
+        else
+        {
+            //if m2 also contains the key
+            if(if m2's identical key has the same value)
+            {
+                if(the combined map doesn't already contain the key)
+                    insert key and value into the combined map
+            }
+            else if(if m2's identical key has a different value)
+             	set boolean variable to false
+                
+        }
+    }
+    do the same for m2 as m1
+    //set result to temporary map
+    result = end;
+    return boolean variable
+    
+}
+
+void subtract(const Map& m1, const Map& m2, Map& result)
+{
+    Map end; //temporary map intended to be identical to result
+    //iterate through m1
+    for(int i = 0; i < size1; i++)
+    {
+        ValueType v;
+        KeyType k;
+        //get key and value of each node
+        m1.get(i, k, v);
+        //if m2 does not contain key, insert key and value into the new map
+        if(!m2.contains(k))
+            end.insert(k, v);
+    }
+    result = end; //set result to temporary map
+}
+
+
+Test cases:
+
+Map m; //default constructor
+assert(m.size() == 0); //test size
+assert(m.empty()); //test empty
+assert(!m.erase("Man")); //test erase if list is empty
+assert(m.insert("Fred", 123)); //test insert
+assert(m.insert("Ethel", 456)); //test insert
+assert(!m.erase("Guy")); //test erase if key is not found in the map
+assert(m.size() == 2); //test size
+assert(!m.empty()); //test empty if list is not empty
+ValueType l = 40;
+assert(m.get("Ethel", l)); //test get two parameter function
+assert(l == 456);
+assert(m.erase("Fred")); //test erase if key is found
+assert(!m.contains("Fred")); //test contains if key is not contained in the map
+assert(m.insert("James", 200));
+assert(m.insert("Lay", 100));
+assert(m.update("James", 100)); //test update
+assert(m.insertOrUpdate("Lay", 150)); //test insert or update if key is already present
+assert(m.insertOrUpdate("Game", 132)); //test insert or update if key is not present
+assert(m.contains("Game")); //test contains if the key is in the map
+
+Map z;
+assert(z.insert("Fred", 123));
+assert(z.insert("Ethel", 456));
+assert(z.size() == 2);
+ValueType v = 42;
+assert(!z.get("Lucy", v)  &&  v == 42); //test get two parameter function
+assert(z.get("Fred", v)  &&  v == 123);
+v = 42;
+KeyType x = "Lucy";
+//test get three parameter function
+assert(z.get(0, x, v)  && ((x == "Fred"  &&  v == 123)  ||  (x == "Ethel"  &&  v == 456)));
+KeyType x2 = "Ricky";
+assert(z.get(1, x2, v)  && ((x2 == "Fred"  &&  v == 123)  ||  (x2 == "Ethel"  &&  v == 456))  && x != x2);
+assert(!z.get(-1, x, v)); //test get three parameter function for an invalid value of i
+assert(!z.get(10, x, v));
+
+//test swap function
+Map a;
+Map b;
+a.insert("A", 1);
+a.insert("B", 2);
+a.insert("C", 3);
+a.insert("D", 4);
+assert(a.size() == 4); //size of a is 4
+b.insert("Z", 10);
+b.insert("Y", 9);
+assert(b.size() == 2); //size of b is 2
+a.swap(b); //swap a and b
+assert(a.size() == 2); //size of a should now be 2
+assert(b.size() == 4); //size of b should now be 4
+assert(a.contains("Z")); //check to see if contents are switched
+assert(a.contains("Y"));
+assert(b.contains("A"));
+assert(b.contains("B"));
+assert(b.contains("C"));
+assert(b.contains("D"));
+assert(!b.contains("Z"));
+assert(!b.contains("Y"));
+assert(!a.contains("A"));
+assert(!a.contains("B"));
+assert(!a.contains("C"));
+assert(!a.contains("D"));
+
+//test copy constructor
+Map c;
+c.insert("A", 1);
+c.insert("B", 2);
+c.insert("C", 3);
+assert(c.size() == 3);
+Map d(c); //copy constructor
+assert(d.contains("A")); //verify that d is now identical to c
+assert(d.contains("B"));
+assert(c.erase("C")); //test that changes to c do not affect d
+assert(d.contains("C"));
+c.insert("D", 5);
+assert(!d.contains("D"));
+
+//test assignment operator
+Map e;
+Map f;
+e.insert("A", 1);
+e.insert("B", 2);
+e.insert("C", 3);
+assert(e.size() == 3);
+f.insert("D", 4);
+f.insert("E", 5);
+assert(f.size() == 2);
+e = f; //set map e equal to map f
+assert(e.size() == 2);
+assert(e.contains("D"));
+assert(e.contains("E"));
+assert(!e.contains("A"));
+
+//test assignment operator when assigning an empty Map to another map
+Map jake;
+Map blah;
+jake.insert("omg", 3);
+jake = blah;
+assert(jake.empty());
+
+//test combine method
+Map m1;
+Map m2;
+Map result;
+//m1 has an identical key "Ricky" to m2 with the same value
+//m1 has an identical key "Lucy" to m2 with a different value
+m1.insert("Fred", 123);
+m1.insert("Ethel", 456);
+m1.insert("Lucy", 789);
+m1.insert("Ricky", 321);
+m2.insert("Lucy", 321);
+m2.insert("Ricky", 321);
+
+assert(combine(m1, m2, result) == false); //check that combine returns false
+assert(result.size() == 3); //check that result's size is 3 so there's no duplicate "Ricky" key
+assert(!result.contains("Lucy")); //result map shouldn't contain "Lucy" key
+assert(result.contains("Fred"));
+assert(result.contains("Ethel"));
+assert(result.contains("Ricky"));
+
+//test combine method with aliases 
+Map a1;
+Map a2;
+a1.insert("Fred", 123);
+a1.insert("Ethel", 456);
+a1.insert("Ricky", 321);
+a2.insert("Lucy", 321);
+
+assert(combine(a1, a2, a1) == true); //check that combine works with aliases
+assert(a1.size() == 4); //check that a1's size is 4 
+assert(a1.contains("Lucy")); //result map a1 should contain "Lucy" key
+assert(a1.contains("Fred"));
+assert(a1.contains("Ethel"));
+assert(a1.contains("Ricky"));
+
+//test that combine method works when result doesn't start out as an empty map
+Map widow;
+Map maker;
+Map chateau;
+assert(widow.insert("Amelie", 100));
+assert(maker.insert("Lacroix", 40));
+assert(chateau.insert("Athena", 20));
+combine(widow, maker, chateau);
+assert(chateau.size() == 2);
+
+//test combine method with an empty map
+Map b1;
+Map b2;
+Map b3; //result map
+b1.insert("Fred", 123);
+b1.insert("Ethel", 456);
+b1.insert("Ricky", 321);
+
+assert(combine(b1, b2, b3) == true); //check that combine works with an empty map
+assert(b1.size() == 3); //check that b1's size is still 3
+assert(b3.contains("Fred"));
+assert(b3.contains("Ethel"));
+assert(b3.contains("Ricky"));
+
+//test subtract method
+Map j;
+Map k;
+Map u;
+j.insert("Fred", 123);
+j.insert("Ethel", 456);
+j.insert("Lucy", 789);
+k.insert("Lucy", 789);
+k.insert("Ricky", 321);
+k.insert("Ethel", 654);
+subtract(j, k, u);
+assert(u.size() == 1);
+assert(u.contains("Fred"));
+
+//test subtract method with aliases
+Map j1;
+Map k1;
+j1.insert("Fred", 123);
+j1.insert("Ethel", 456);
+j1.insert("Lucy", 789);
+k1.insert("Lucy", 789);
+k1.insert("Ricky", 321);
+k1.insert("Ethel", 654);
+subtract(j1, k1, k1);
+assert(k1.size() == 1);
+assert(k1.contains("Fred"));
+
+//test subtract method with an empty m2 map
+Map j2;
+Map k2;
+Map r; //result
+j2.insert("Fred", 123);
+j2.insert("Ethel", 456);
+j2.insert("Lucy", 789);
+subtract(j2, k2, r);
+assert(r.size() == 3);
+assert(r.contains("Fred"));
+assert(r.contains("Ethel"));
+assert(r.contains("Lucy"));
+
+//test subtract method with an empty m1 map
+Map j3;
+Map k3;
+Map r1; //result
+k3.insert("Fred", 123);
+k3.insert("Ethel", 456);
+k2.insert("Lucy", 789);
+subtract(j3, k3, r1);
+assert(r1.size() == 0);
+
+//test that subtract method works when result doesn't start as an empty map
+Map dva;
+Map mercy;
+Map reinhardt;
+dva.insert("Pewpew", 123);
+dva.insert("Mech", 456);
+dva.insert("strong", 323);
+mercy.insert("healing", 789);
+mercy.insert("strong", 432);
+reinhardt.insert("tank", 232);
+subtract(dva, mercy, reinhardt);
+assert(reinhardt.size() == 2);
+assert(reinhardt.contains("Pewpew"));
+assert(reinhardt.contains("Mech")); 
