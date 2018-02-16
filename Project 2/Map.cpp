@@ -31,19 +31,6 @@ Map::Map(const Map &copy)
 
 Map::~Map()
 {
-    //start with head pointer
-    /*
-    Node *p = head;
-    while(p != nullptr)
-    {
-        //set new node pointer to current node
-        Node *x = p;
-        //set current node's pointer to next node
-        p = x->next;
-        //delete current node
-        delete x;
-    }
-     */
     Node *p = head;
     while(p != nullptr)
     {
