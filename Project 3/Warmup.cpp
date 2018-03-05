@@ -1,4 +1,4 @@
-/*
+
  #include <list>
  #include <vector>
  #include <algorithm>
@@ -42,9 +42,9 @@
  test();
  cout << "Passed" << endl;
  }
- */
 
-/*
+
+
 #include <vector>
 #include <algorithm>
 #include <iostream>
@@ -87,8 +87,8 @@ int main()
     test();
     cout << "Passed" << endl;
 }
-*/
-/*
+
+
 #include <list>
 #include <vector>
 #include <algorithm>
@@ -178,7 +178,7 @@ int main()
     test();
     cout << "Passed" << endl;
 }
-*/
+
 
 #include <vector>
 #include <algorithm>
@@ -223,7 +223,7 @@ void test()
     assert(x.size() == 8 && x.front()->rating() == 85 && x.back()->rating() == 10);
     removeBad(x);
     assert(x.size() == 0 && destroyedOnes.size() == 8);
-    /*
+    
     vector<int> v;
     for (int k = 0; k < 4; k++)
         v.push_back(x[k]->rating());
@@ -237,7 +237,7 @@ void test()
         assert(destroyedOnes[k] == expectGone[k]);
     for (vector<Movie*>::iterator p = x.begin(); p != x.end(); p++)
         delete *p;
-     */
+     
 }
 
 int main()
