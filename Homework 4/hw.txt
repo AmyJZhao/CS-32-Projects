@@ -1,0 +1,9 @@
+2. The call to Map<Coord, int>::insert causes at least one compilation error because there is no operator< method defined for Coord.
+3. b. We could not solve this problem if we only had a one parameter listAll recursive method because the following recursive call would not know the previous path of the classes and would not be able to print all permutations. A second parameter holding the path is essential for updating the condition in the listAll recursive method. 
+4.
+a. O(N^3)
+The outer loop runs N times. The inner nested loop then also runs N times. In the best case scenario, i equals j, and the inner loop within the inner nested loop doesn't run. in the worst case however, that loop runs N times. Hence, the Big O of the algorithm is O(N^3).
+b. O(N^3)
+The outer loop runs N times. The outer loop causes the inner loop to run N times because when i = N - 1, the inner loop runs N - 1 iterations. Finally, however many times the inner loop runs, the innermost loop runs N times. Therefore, the function of N is N * (N - 1) * N, which simplifies to N^3.
+5. O(N * log N)
+The loop runs N times. Within the loop, the algorithm finds a value within a map, which takes log N (base 2) steps. Thus, the Big-O of the algorithm is N * log N (base 2).

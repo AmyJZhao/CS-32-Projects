@@ -3,49 +3,31 @@
 #ifndef MAP_INCLUDED
 #define MAP_INCLUDED
 
-template<typename KeyType, typename ValueType>
+template <typename KeyType, typename ValueType>
 
 class Map
 {
 public:
-    Map()               // Create an empty map (i.e., one with no key/value pairs).
-    : m_size(0)
-    {
-        // create dummy node
-        m_head = new Node;
-        m_head->m_next = m_head;
-        m_head->m_prev = m_head;
-    }
-    bool empty() const  // Return true if the map is empty, otherwise false.
-    {
-        return size() == 0;
-    }
+    Map();               // Create an empty map (i.e., one with no key/value pairs).
     
-    int size() const    // Return the number of key/value pairs in the map.
-    {
-        return m_size;
-    }
+    bool empty() const;  // Return true if the map is empty, otherwise false.
     
-    bool insert(const KeyType& key, const ValueType& value)
+    int size() const;    // Return the number of key/value pairs in the map.
+    
+    bool insert(const KeyType& key, const ValueType& value);
     // If key is not equal to any key currently in the map, and if the
     // key/value pair can be added to the map, then do so and return true.
     // Otherwise, make no change to the map and return false (indicating
     // that either the key is already in the map, or the map has a fixed
     // capacity and is full.
-    {
-        return doInsertOrUpdate(key, value, true /* insert */, false /* no update */);
-    }
     
-    bool update(const KeyType& key, const ValueType& value)
+    bool update(const KeyType& key, const ValueType& value);
     // If key is equal to a key currently in the map, then make that key no
     // longer map to the value it currently maps to, but instead map to
     // the value of the second parameter; return true in this case.
     // Otherwise, make no change to the map and return false.
-    {
-        return doInsertOrUpdate(key, value, false /* no insert */, true /* update */);
-    }
     
-    bool insertOrUpdate(const KeyType& key, const ValueType& value)
+    bool insertOrUpdate(const KeyType& key, const ValueType& value);
     // If key is equal to a key currently in the map, then make that key no
     // longer map to the value it currently maps to, but instead map to
     // the value of the second parameter; return true in this case.
@@ -54,21 +36,15 @@ public:
     // Otherwise, make no change to the map and return false (indicating
     // that the key is not already in the map and the map has a fixed
     // capacity and is full).
-    {
-        return doInsertOrUpdate(key, value, true /* insert */, true /* update */);
-    }
     
     bool erase(const KeyType& key);
     // If key is equal to a key currently in the map, remove the key/value
     // pair with that key from the map and return true.  Otherwise, make
     // no change to the map and return false.
     
-    bool contains(const KeyType& key) const
+    bool contains(const KeyType& key) const;
     // Return true if key is equal to a key currently in the map, otherwise
     // false.
-    {
-        return find(key) != m_head;
-    }
     
     bool get(const KeyType& key, ValueType& value) const;
     // If key is equal to a key currently in the map, set value to the
@@ -82,34 +58,13 @@ public:
     // true.  Otherwise, leave the key and value parameters unchanged and
     // return false.
     
-    void swap(Map& other)
+    void swap(Map& other);
     // Exchange the contents of this map with the other one.
-    {
-        // swap head pointers
-        Node* tempHead = m_head;
-        m_head = other.m_head;
-        other.m_head = tempHead;
-        
-        // swap sizes
-        int t = m_size;
-        m_size = other.m_size;
-        other.m_size = t;
-    }
     
     // Housekeeping functions
-    ~Map()
-    {
-        // Delete the m_size non-dummy nodes plus the dummy node
-        
-        for (Node* p = m_head->m_prev ; m_size >= 0; m_size--)
-        {
-            Node* toBeDeleted = p;
-            p = p->m_prev;
-            delete toBeDeleted;
-        }
-    }
-    Map(const Map<KeyType, ValueType> &other);
-    Map& operator=(const Map<KeyType, ValueType> &rhs);
+    ~Map();
+    Map(const Map<KeyType, ValueType>& other);
+    Map<KeyType, ValueType>& operator=(const Map<KeyType, ValueType>& rhs);
     
 private:
     // Representation:
@@ -143,8 +98,66 @@ private:
     // true, update the pair with the given key.
 };
 
-template<typename KeyType, typename ValueType>
-Map<KeyType, ValueType>::Map(const Map& other)
+// Inline implementations
+template <typename KeyType, typename ValueType>
+inline
+int Map<KeyType, ValueType>::size() const
+{
+    return m_size;
+}
+template <typename KeyType, typename ValueType>
+inline
+bool Map<KeyType, ValueType>::empty() const
+{
+    return size() == 0;
+}
+template <typename KeyType, typename ValueType>
+inline
+bool Map<KeyType, ValueType>::contains(const KeyType& key) const
+{
+    return find(key) != m_head;
+}
+template <typename KeyType, typename ValueType>
+inline
+bool Map<KeyType, ValueType>::insert(const KeyType& key, const ValueType& value)
+{
+    return doInsertOrUpdate(key, value, true /* insert */, false /* no update */);
+}
+template <typename KeyType, typename ValueType>
+inline
+bool Map<KeyType, ValueType>::update(const KeyType& key, const ValueType& value)
+{
+    return doInsertOrUpdate(key, value, false /* no insert */, true /* update */);
+}
+template <typename KeyType, typename ValueType>
+inline
+bool Map<KeyType, ValueType>::insertOrUpdate(const KeyType& key, const ValueType& value)
+{
+    return doInsertOrUpdate(key, value, true /* insert */, true /* update */);
+}
+template <typename KeyType, typename ValueType>
+Map<KeyType, ValueType>::Map()
+: m_size(0)
+{
+    // create dummy node
+    m_head = new Node;
+    m_head->m_next = m_head;
+    m_head->m_prev = m_head;
+}
+template <typename KeyType, typename ValueType>
+Map<KeyType, ValueType>::~Map()
+{
+    // Delete the m_size non-dummy nodes plus the dummy node
+    
+    for (Node* p = m_head->m_prev ; m_size >= 0; m_size--)
+    {
+        Node* toBeDeleted = p;
+        p = p->m_prev;
+        delete toBeDeleted;
+    }
+}
+template <typename KeyType, typename ValueType>
+Map<KeyType, ValueType>::Map(const Map<KeyType, ValueType>& other)
 : m_size(other.m_size)
 {
     // Create dummy node; don't initialize its pointers
@@ -177,9 +190,8 @@ Map<KeyType, ValueType>::Map(const Map& other)
     m_head->m_prev = prev;
     prev->m_next = m_head;
 }
-
-template<typename KeyType, typename ValueType>
-Map<KeyType, ValueType>& Map<KeyType, ValueType>::operator=(const Map<KeyType, ValueType> &rhs)
+template <typename KeyType, typename ValueType>
+Map<KeyType, ValueType>& Map<KeyType, ValueType>::operator=(const Map<KeyType, ValueType>& rhs)
 {
     if (this != &rhs)
     {
@@ -188,8 +200,7 @@ Map<KeyType, ValueType>& Map<KeyType, ValueType>::operator=(const Map<KeyType, V
     }
     return *this;
 }
-
-template<typename KeyType, typename ValueType>
+template <typename KeyType, typename ValueType>
 bool Map<KeyType, ValueType>::erase(const KeyType& key)
 {
     Node* p = find(key);
@@ -206,8 +217,7 @@ bool Map<KeyType, ValueType>::erase(const KeyType& key)
     m_size--;
     return true;
 }
-
-template<typename KeyType, typename ValueType>
+template <typename KeyType, typename ValueType>
 bool Map<KeyType, ValueType>::get(const KeyType& key, ValueType& value) const
 {
     Node* p = find(key);
@@ -216,8 +226,7 @@ bool Map<KeyType, ValueType>::get(const KeyType& key, ValueType& value) const
     value = p->m_value;
     return true;
 }
-
-template<typename KeyType, typename ValueType>
+template <typename KeyType, typename ValueType>
 bool Map<KeyType, ValueType>::get(int i, KeyType& key, ValueType& value) const
 {
     if (i < 0  ||  i >= m_size)
@@ -251,8 +260,20 @@ bool Map<KeyType, ValueType>::get(int i, KeyType& key, ValueType& value) const
     value = p->m_value;
     return true;
 }
-
-template<typename KeyType, typename ValueType>
+template <typename KeyType, typename ValueType>
+void Map<KeyType, ValueType>::swap(Map<KeyType, ValueType>& other)
+{
+    // swap head pointers
+    Node* tempHead = m_head;
+    m_head = other.m_head;
+    other.m_head = tempHead;
+    
+    // swap sizes
+    int t = m_size;
+    m_size = other.m_size;
+    other.m_size = t;
+}
+template <typename KeyType, typename ValueType>
 typename Map<KeyType, ValueType>::Node* Map<KeyType, ValueType>::find(const KeyType& key) const
 {
     // Do a linear search through the list
@@ -262,8 +283,7 @@ typename Map<KeyType, ValueType>::Node* Map<KeyType, ValueType>::find(const KeyT
         ;
     return p;
 }
-
-template<typename KeyType, typename ValueType>
+template <typename KeyType, typename ValueType>
 bool Map<KeyType, ValueType>::doInsertOrUpdate(const KeyType& key, const ValueType& value,
                            bool mayInsert, bool mayUpdate)
 {
@@ -295,9 +315,8 @@ bool Map<KeyType, ValueType>::doInsertOrUpdate(const KeyType& key, const ValueTy
     m_size++;
     return true;
 }
-
-template<typename KeyType, typename ValueType>
-bool combine(const Map<KeyType, ValueType> &m1, const Map<KeyType, ValueType> &m2, Map<KeyType, ValueType> &result)
+template <typename KeyType, typename ValueType>
+bool combine(const Map<KeyType, ValueType>& m1, const Map<KeyType, ValueType>& m2, Map<KeyType, ValueType>& result)
 // If a key/value pair occurs in m1 or m2 or both, then it will occur in
 // result upon return from this function.  Return true unless m1 and m2
 // have a pair with the same key but different values; neither such pair
@@ -345,9 +364,8 @@ bool combine(const Map<KeyType, ValueType> &m1, const Map<KeyType, ValueType> &m
     result.swap(res);
     return status;
 }
-
-template<typename KeyType, typename ValueType>
-void subtract(const Map<KeyType, ValueType> &m1, const Map<KeyType, ValueType> &m2, Map<KeyType, ValueType> &result)
+template <typename KeyType, typename ValueType>
+void subtract(const Map<KeyType, ValueType>& m1, const Map<KeyType, ValueType>& m2, Map<KeyType, ValueType>& result)
 // Upon return, result contains those pairs in m1 whose keys don't
 // appear in m2.
 {
