@@ -102,4 +102,12 @@ Array:
 0
 2
 4. 
+a) O(C + log S)
+b) O(log C + S)
+c) O(log C + log S)
+d) O(C + log S)
+e) O(C + S)
+f) O(log S)
+g) O(S)
+h) O(log S)
   
