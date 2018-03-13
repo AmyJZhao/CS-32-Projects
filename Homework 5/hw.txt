@@ -1,0 +1,105 @@
+1.
+a.
+50
+  20
+    10
+      xx
+      15
+    40
+      30
+        25
+        36
+      xx
+  60
+    70
+      65
+      74
+        xx
+        80  
+b. In-order: 10 15 20 25 30 36 40 50 60 65 70 74 80
+   Pre-order: 50 20 10 15 40 30 25 36 60 70 65 74 80
+   Post-order: 15 10 25 36 30 40 20 65 80 74 70 60 50
+c. 
+after deleting the node 30: (replaced 30 with its left subtree's largest valued child, 25)
+50
+  20
+    10
+      xx
+      15
+    40
+      25
+	xx
+        36
+      xx
+  60
+    70
+      65
+      74
+        xx
+        80  
+after deleting the node 20: (replaced 20 with its left subtree's largest valued child, 15)
+50
+  20
+    15
+    40
+      25
+	xx
+        36
+      xx
+  60
+    70
+      65
+      74
+        xx
+        80 
+2. 
+a.
+struct BTNode
+{
+	int value;
+	BTNode* parent;
+	BTNode* left, right;
+}
+b. Let's call the value of the node we want to insert V.
+If the tree is empty, set the parent pointer of the node to be inserted to nullptr.
+Start at the root of the tree.
+While we're not done...
+   If V is equal to the current node's value, stop processing and return.
+   If V is less than the current node's value...
+	If there's a left child, then go left.
+	Else, set the current node's left pointer to the new node and set the new node's 	parent pointer to the current node.
+   If V is greater than the current node's value...
+	If there's a right child, then go right.
+	Else, set the current node's right pointer to the new node and set the new node's 	parent pointer to the current node.  
+3.
+a.
+8
+  6
+    0
+    3
+  4
+    2
+    xx
+b.
+8
+6
+4
+0
+3
+2
+c.
+6
+  3
+    0
+    xx
+  4
+    2
+    xx
+Array:
+6
+3
+4
+0
+2
+4. 
+  
