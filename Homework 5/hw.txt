@@ -11,14 +11,15 @@ a.
         36
       xx
   60
+    xx
     70
       65
-      74
-        xx
-        80  
+      80
+        74
+        xx  
 b. In-order: 10 15 20 25 30 36 40 50 60 65 70 74 80
-   Pre-order: 50 20 10 15 40 30 25 36 60 70 65 74 80
-   Post-order: 15 10 25 36 30 40 20 65 80 74 70 60 50
+   Pre-order: 50 20 10 15 40 30 25 36 60 70 65 80 74
+   Post-order: 15 10 25 36 30 40 20 65 74 80 70 60 50
 c. 
 after deleting the node 30: (replaced 30 with its left subtree's largest valued child, 25)
 50
@@ -28,30 +29,32 @@ after deleting the node 30: (replaced 30 with its left subtree's largest valued 
       15
     40
       25
-	xx
+        xx
         36
       xx
   60
+    xx
     70
       65
-      74
-        xx
-        80  
+      80
+        74
+        xx  
 after deleting the node 20: (replaced 20 with its left subtree's largest valued child, 15)
 50
-  20
-    15
+  15
+    10
     40
       25
-	xx
+        xx
         36
       xx
   60
+    xx
     70
       65
-      74
-        xx
-        80 
+      80
+        74
+        xx  
 2. 
 a.
 struct BTNode
